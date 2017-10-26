@@ -22,7 +22,16 @@ def recur(url, currentdir):
 	soup = BeautifulSoup(r.content, "lxml")
 	i=0
 	ite = soup.find_all("a")
-	ite.pop(0)
+
+	try:
+		ite.pop(0)
+	except Exception as e:
+		'''
+		When there is no link on page. Generally 404 or 403 page on nginx.
+		'''
+		pass
+
+
 	assure_path_exists(urp.unquote(currentdir))
 	file = open(urp.unquote(currentdir)+"links.txt", "w")
 
